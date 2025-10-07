@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Inventory Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .low-stock { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Inventory Dashboard</h1>
+    <p>Real-time inventory overview with alerts for low stock.</p>
+
+    <table id="inventory-table">
+        <thead>
+            <tr>
+                <th>Product SKU</th>
+                <th>Warehouse</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Inventory rows will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Example static data; in real app, fetch from backend API
+        const inventoryData = [
+            { sku: 'ITEM001', warehouse: 'Warehouse A', quantity: 120 },
+            { sku: 'ITEM002', warehouse: 'Warehouse B', quantity: 15 },
+            { sku: 'ITEM003', warehouse: 'Warehouse A', quantity: 0 }
+        ];
+
+        function renderInventory(data) {
+            const tbody = document.getElementById('inventory-table').querySelector('tbody');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                const skuCell = document.createElement('td');
+                skuCell.textContent = item.sku;
+                row.appendChild(skuCell);
+
+                const warehouseCell = document.createElement('td');
+                warehouseCell.textContent = item.warehouse;
+                row.appendChild(warehouseCell);
+
+                const qtyCell = document.createElement('td');
+                qtyCell.textContent = item.quantity;
+                if (item.quantity < 20) {
+                    qtyCell.classList.add('low-stock');
+                }
+                row.appendChild(qtyCell);
+
+                tbody.appendChild(row);
+            });
+        }
+
+        renderInventory(inventoryData);
+    </script>
+</body>
+</html>
